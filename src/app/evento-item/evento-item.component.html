@@ -1,0 +1,13 @@
+<div class="card" [ngClass]="{'esFondoRojo':fondoRojo,'esFondoAzul':fondoAzul}">
+  <img class="card-img-top" [src]="ev.image" [alt]="ev.title" [title]="ev.title" [style.height.px]="alturaImagen">
+  <div class="card-body">
+    <h4 class="card-title">{{ev.title}}</h4>
+    <p class="card-text">{{ev.description|titlecase}}</p>
+  </div>
+  <div class="card-footer text-muted">
+    {{ev.date|date:"dd/MM/y"}}
+    <span class="float-right">{{ev.price|currency:"EUR"}}</span>
+  </div>
+  <button class="btn btn-danger ml-3 float-right" (click)="deleteEvent()">Delete</button>
+</div>
+

@@ -1,0 +1,30 @@
+<evento-add (eventoNuevo)="anyadirEvento($event)"></evento-add>
+<nav class="navbar navbar-light bg-light justify-content-between mt-3">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="#" (click)="orderDate()">Orden por fecha</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" (click)="orderPrice()">Orden por precio</a>
+    </li>
+  </ul>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="text" [(ngModel)]="search" name="search" placeholder="Search"
+      aria-label="Search">
+  </form>
+</nav>
+
+<div class="row" *ngIf="eventos && eventos.length; else noEventos">
+  <select [(ngModel)]="desplegable" (change)="cambiarFondo()">
+    <option value="">--Elige Fondo--</option>
+    <option value="rojo">Fondo Rojo</option>
+    <option value="azul">Fondo Azul</option>
+  </select>
+  <evento-item class="col-6 mt-4" *ngFor="let ev of eventos|eventoFiltro:search"
+  [ev]="ev" [fondoRojo]="fondoRojo" [fondoAzul]="fondoAzul"
+  (borrarEvento)="deleteEvento(ev)">
+  </evento-item>
+</div>
+<ng-template #noEventos>
+  <h3>No hay eventos disponibles</h3>
+</ng-template>
