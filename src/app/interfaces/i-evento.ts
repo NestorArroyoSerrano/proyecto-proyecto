@@ -1,8 +1,8 @@
 export interface IEvento {
     id?:number;
-    title: string;
-    image: string;
-    date: Date;
-    description: string;
-    price: number;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    fecha: Date;
+    imagen: string;
   }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { IEvento } from '../interfaces/i-evento';
+import { EventosService } from '../servicios/eventos.service';
 
 @Component({
   selector: 'evento-add',
@@ -16,19 +18,28 @@ export class EventoAddComponent implements OnInit {
 
   inicializarEvento(){
     this.newEvent={
-      title:"",
-      description:"",
-      image:"",
-      price:0,
-      date:new Date("")
+      nombre:"",
+      descripcion:"",
+      imagen:"",
+      precio:0,
+      fecha:new Date("")
     };
   }
 
-  @Output() eventoNuevo=new EventEmitter<IEvento>();
+  constructor(private eventosService:EventosService,
+    private enrutarEventosShow:Router){}
+
+ // @Output() eventoNuevo=new EventEmitter<IEvento>();
 
   addEvent(){
-    this.eventoNuevo.emit(this.newEvent);
-    this.inicializarEvento();
+    this.eventosService.addEvento(this.newEvent).subscribe(
+      pepe=>{
+        //this.eventoNuevo.emit(pepe);
+        console.log("Me ha generado el nuevo evento con id:" +pepe.id)
+        this.inicializarEvento();
+        this.enrutarEventosShow.navigate(['/eventos'])
+      }
+    )
   }
 
   changeImage(fileInput: HTMLInputElement) {
@@ -44,7 +55,7 @@ export class EventoAddComponent implements OnInit {
         this.newEvent.image = reader.result.toString();
       else
       this.newEvent.image = "";*/
-      this.newEvent.image = reader.result as string;
+      this.newEvent.imagen = reader.result as string;
     });
 
    }

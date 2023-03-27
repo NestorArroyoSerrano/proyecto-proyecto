@@ -1,24 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Angular Events</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/eventos']">Eventos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/eventos/add']">Añadir evento</a>
+    </li>
+  </ul>
+</nav>
 <form class="mt-4" (ngSubmit)="addEvent()">
   <div class="form-group">
     <label for="name">Nombre</label>
-    <input type="text" class="form-control" name="title" [(ngModel)]="newEvent.title" placeholder="Enter name">
+    <input type="text" class="form-control" name="title" [(ngModel)]="newEvent.nombre" placeholder="Enter name">
   </div>
   <div class="form-group">
     <label for="date">Fecha</label>
-    <input type="date" class="form-control" name="date" [(ngModel)]="newEvent.date">
+    <input type="date" class="form-control" name="date" [(ngModel)]="newEvent.fecha">
   </div>
   <div class="form-group">
     <label for="description">Descripción</label>
-    <textarea class="form-control" name="description" rows="3" [(ngModel)]="newEvent.description"></textarea>
+    <textarea class="form-control" name="description" rows="3" [(ngModel)]="newEvent.descripcion"></textarea>
   </div>
   <div class="form-group">
     <label for="price">Precio</label>
-    <input [(ngModel)]="newEvent.price" type="number" class="form-control" name="price" min="0.00" max="10000.00" step="0.01" />
+    <input [(ngModel)]="newEvent.precio" type="number" class="form-control" name="price" min="0.00" max="10000.00"
+      step="0.01">
   </div>
   <div class="form-group">
     <label for="image">Imagen</label>
-    <input [(ngModel)]="newEvent.image" type="file" class="form-control" name="image" #fileImage (change)="changeImage(fileImage)">
+    <input [(ngModel)]="newEvent.imagen" type="file" class="form-control" name="image" #fileImage
+      (change)="changeImage(fileImage)">
   </div>
-  <img [src]="newEvent.image" alt="" class="img-thumbnail">
+  <img [src]="newEvent.imagen" alt="" class="img-thumbnail">
   <button type="submit" class="btn btn-primary">Create</button>
 </form>

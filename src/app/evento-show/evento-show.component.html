@@ -1,11 +1,21 @@
-<evento-add (eventoNuevo)="anyadirEvento($event)"></evento-add>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Angular Events</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/eventos']">Eventos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/eventos/add']">Añadir evento</a>
+    </li>
+  </ul>
+</nav>
 <nav class="navbar navbar-light bg-light justify-content-between mt-3">
   <ul class="nav nav-pills">
     <li class="nav-item">
-      <a class="nav-link" href="#" (click)="orderDate()">Orden por fecha</a>
+      <a class="nav-link" href="#" (click)="orderDate($event)">Orden por fecha</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#" (click)="orderPrice()">Orden por precio</a>
+      <a class="nav-link" href="#" (click)="orderPrice($event)">Orden por precio</a>
     </li>
   </ul>
   <form class="form-inline">
@@ -20,9 +30,8 @@
     <option value="rojo">Fondo Rojo</option>
     <option value="azul">Fondo Azul</option>
   </select>
-  <evento-item class="col-6 mt-4" *ngFor="let ev of eventos|eventoFiltro:search"
-  [ev]="ev" [fondoRojo]="fondoRojo" [fondoAzul]="fondoAzul"
-  (borrarEvento)="deleteEvento(ev)">
+  <evento-item class="col-6 mt-4" *ngFor="let ev of eventos|eventoFiltro:search" [ev]="ev" [fondoRojo]="fondoRojo"
+    [fondoAzul]="fondoAzul" (borrarEvento)="deleteEvento(ev)">
   </evento-item>
 </div>
 <ng-template #noEventos>

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IEvento } from '../interfaces/i-evento';
+import { EventosService } from '../servicios/eventos.service';
 
 @Component({
   selector: 'evento-item',
@@ -14,7 +15,16 @@ export class EventoItemComponent {
 
   @Output() borrarEvento=new EventEmitter<void>();
 
+  constructor(private eventosServicio:EventosService){}
+
   deleteEvent(){
-    this.borrarEvento.emit();
+    //this.borrarEvento.emit();
+    this.eventosServicio.borrarEvento(<number>this.ev.id).subscribe({
+      next:borrados=>{
+        console.log("Mensaje:"+borrados);
+        this.borrarEvento.emit();
+      },
+      error:error=>console.log(error)
+    });
   }
 }

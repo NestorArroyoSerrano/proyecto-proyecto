@@ -1,6 +1,6 @@
 import { Component, DoCheck, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { IEvento } from '../interfaces/i-evento';
-import { EventosService } from './servicios/eventos.service';
+import { EventosService } from '../servicios/eventos.service';
 
 @Component({
   selector: 'evento-show',
@@ -37,21 +37,23 @@ export class EventoShowComponent implements OnInit{
   fondoRojo=false;
   fondoAzul=false;
 
-  orderDate(){
+  orderDate(event:Event){
+    event.preventDefault();
     this.search="";
-    this.eventos.sort((evento1,evento2)=>evento1.date.getMilliseconds()-evento2.date.getMilliseconds());
+    this.eventos.sort((evento1,evento2)=>new Date(evento1.fecha).getDate()-new Date(evento2.fecha).getDate());
   }
 
-  orderPrice(){
+  orderPrice(event:Event){
+    event.preventDefault();
     this.search="";
     //this.eventos.sort((evento1,evento2)=>evento1.price<evento2.price?-1:1);
-    this.eventos.sort((evento1,evento2)=>evento1.price-evento2.price);
+    this.eventos.sort((evento1,evento2)=>evento1.precio-evento2.precio);
   }
 
-  anyadirEvento(eventoNuevo: IEvento){
+  /*anyadirEvento(eventoNuevo: IEvento){
     console.log("Insertar Evento en el Array");
     this.eventos.push(eventoNuevo);
-  }
+  }*/
 
 
 
