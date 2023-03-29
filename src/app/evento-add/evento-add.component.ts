@@ -18,9 +18,10 @@ export class EventoAddComponent implements OnInit {
 
   inicializarEvento(){
     this.newEvent={
+      id:-1,
       nombre:"",
       descripcion:"",
-      imagen:"",
+      imagen:undefined,
       precio:0,
       fecha:new Date("")
     };
@@ -29,17 +30,59 @@ export class EventoAddComponent implements OnInit {
   constructor(private eventosService:EventosService,
     private enrutarEventosShow:Router){}
 
- // @Output() eventoNuevo=new EventEmitter<IEvento>();
+  //@Output() eventoNuevo=new EventEmitter<IEvento>();
 
   addEvent(){
-    this.eventosService.addEvento(this.newEvent).subscribe(
-      pepe=>{
-        //this.eventoNuevo.emit(pepe);
-        console.log("Me ha generado el nuevo evento con id:" +pepe.id)
-        this.inicializarEvento();
-        this.enrutarEventosShow.navigate(['/eventos'])
+
+    if(this.newEvent.id==-1){
+      this.eventosService.addEvento(this.newEvent).subscribe(
+        pepe=>{
+          //this.eventoNuevo.emit(pepe);
+          console.log("Me ha generado el nuevo evento con id:"+pepe.id);
+          this.inicializarEvento();
+          this.enrutarEventosShow.navigate(['/eventos']);
+        }
+      )
+    }
+    else{
+      //LLAMADA AL SERVICIO PUT
+      this.eventosService.modifyEvento(this.newEvent).subscribe(
+        pepe=>{
+          //this.eventoNuevo.emit(pepe);
+          console.log("Me ha modificado evento con id:"+pepe.id);
+          this.inicializarEvento();
+          this.enrutarEventosShow.navigate(['/eventos']);
+        }
+      )
+    }
+
+  }
+
+  obtenerEvento(){
+    const idEv=this.newEvent.id;
+    if(<number>idEv>0)
+    {
+      this.eventosService.conseguirEvento(<number>idEv).subscribe({
+
+        next:ev=>{
+          if(ev!=null)
+            this.newEvent=ev
+          else
+          {
+            this.inicializarEvento();
+            alert("Error el id no existe");
+          }
+        },
+        error:er=>{
+          this.inicializarEvento();
+          alert("Error el id no existe");
+        }
+
       }
-    )
+
+
+      )
+    }
   }
 
   changeImage(fileInput: HTMLInputElement) {

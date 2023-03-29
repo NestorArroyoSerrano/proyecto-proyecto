@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, observable, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { IEvento } from '../interfaces/i-evento';
 
 @Injectable({
@@ -26,7 +26,22 @@ export class EventosService {
       map(response=>{
         console.log(response.mensaje);
         return response.evento;
-      }));
+      }),
+      catchError((respuesta:HttpErrorResponse)=>throwError(()=>
+      new Error("Error al insertar la imagen. Respuesta Server:"+respuesta.status+" "+respuesta.message+" "))
+      ));
+  }
+
+
+  modifyEvento(evento:IEvento):Observable<IEvento>{
+    return this.http.put<{evento:IEvento,mensaje:string}>(this.URL+"/"+evento.id,evento).pipe(
+      map(response=>{
+        console.log(response.mensaje);
+        return response.evento;
+      }),
+      catchError((respuesta:HttpErrorResponse)=>throwError(()=>
+      new Error("Error al insertar la imagen. Respuesta Server:"+respuesta.status+" "+respuesta.message+" "))
+      ));
   }
 
   /*borrarEvento(idEvento:number):Observable<number>{
@@ -41,4 +56,3 @@ export class EventosService {
     );
   }
 }
-

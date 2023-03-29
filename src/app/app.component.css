@@ -1,0 +1,16 @@
+.navbar-brand {
+  position: absolute;
+  left: 50%;
+  transform: translatex(-50%);
+}
+nav{
+  padding:1%;
+}
+#login {
+  color: white;
+  margin-left: 1700px;
+}
+#logout {
+  color: white;
+  margin-left: 10px;
+}

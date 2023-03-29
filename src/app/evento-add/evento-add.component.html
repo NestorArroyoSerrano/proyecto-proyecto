@@ -1,5 +1,4 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Angular Events</a>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/eventos']">Eventos</a>
@@ -10,6 +9,11 @@
   </ul>
 </nav>
 <form class="mt-4" (ngSubmit)="addEvent()">
+  <div class="form-group">
+    <label for="id">ID</label>
+    <input type="text" class="form-control" name="id" [(ngModel)]="newEvent.id"
+    placeholder="Mete un ID si quieres modificar" (blur)="obtenerEvento()">
+  </div>
   <div class="form-group">
     <label for="name">Nombre</label>
     <input type="text" class="form-control" name="title" [(ngModel)]="newEvent.nombre" placeholder="Enter name">
@@ -25,13 +29,14 @@
   <div class="form-group">
     <label for="price">Precio</label>
     <input [(ngModel)]="newEvent.precio" type="number" class="form-control" name="price" min="0.00" max="10000.00"
-      step="0.01">
+      step="0.01" />
   </div>
   <div class="form-group">
     <label for="image">Imagen</label>
-    <input [(ngModel)]="newEvent.imagen" type="file" class="form-control" name="image" #fileImage
+    <input (ngModel)="newEvent.imagen" type="file" class="form-control" name="image" #fileImage
       (change)="changeImage(fileImage)">
   </div>
   <img [src]="newEvent.imagen" alt="" class="img-thumbnail">
   <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
